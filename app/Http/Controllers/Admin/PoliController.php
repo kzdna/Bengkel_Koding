@@ -10,8 +10,8 @@ class PoliController extends Controller
 {
     public function index()
     {
-        $polis = Poli::all();
-        return view('admin.polis.index', compact('polis'));
+        $poli = Poli::all();
+        return view('admin.polis.index', compact('poli'));
     }
 
     public function create()
@@ -27,7 +27,6 @@ class PoliController extends Controller
         ]);
 
         Poli::create($validated);
-        return redirect()->route('polis.index')->with('success', 'Poli berhasil ditambahkan');
+        return redirect()->route('poli.index')->with('success', 'Poli berhasil ditambahkan');
     }
-    
 }

@@ -19,7 +19,8 @@ class AuthController extends Controller
             return match($user->role) {
                 'admin'  => redirect()->route('admin.dashboard'),
                 'dokter' => redirect()->route('dokter.dashboard'),
-                default  => redirect()->route('pasien.dashboard'),
+                'pasien' => redirect()->route('pasien.dashboard'),
+                default  => redirect()->route('login'),
             };
         }
         return back()->withErrors(['email' => 'Email atau Password Salah!']);
@@ -31,24 +32,29 @@ class AuthController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|confirmed',
             'alamat' => 'required',
             'no_ktp' => 'required',
             'no_hp' => 'required',
+            'email' => 'required|string|email|unique:users,email',
+            'password' => 'required|confirmed',
         ]);
 
+        $lastPasien = User::where('role', 'pasien')->orderBy('id', 'desc')->first();
+        $lastId = $lastPasien ? $lastPasien->id + 1 : 1;
+        $no_rm = date('Ym') . '-' . str_pad($lastId, 3, '0', STR_PAD_LEFT);
+
         User::create([
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $request->nama,     
             'alamat' => $request->alamat,
             'no_ktp' => $request->no_ktp,
             'no_hp' => $request->no_hp,
+            'no_rm' => $no_rm,            
             'role' => 'pasien',
+            'email' => $request->email,   
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Register berhasil! Silakan login.');
     }
 
     public function logout() { Auth::logout(); return redirect()->route('login'); }
