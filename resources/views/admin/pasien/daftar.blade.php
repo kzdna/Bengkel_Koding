@@ -70,11 +70,11 @@
                                 <option value="">-- Pilih Jadwal --</option>
 
                                 @foreach ($jadwals as $jadwal)
-                                <option value="{{ $jadwal->id }}" data-poli="{{ $jadwal->dokter->id_poli }}">
-                                    {{ $jadwal->hari }}
-                                    {{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }}
-                                    Dr. {{ $jadwal->dokter->nama ?? '--' }}
-                                </option>
+                                    <option value="{{ $jadwal->id }}" 
+                                            data-poli="{{ $jadwal->dokter->id_poli ?? '' }}"> {{-- Gunakan ?? '' supaya tidak error --}}
+                                        {{ $jadwal->hari }} | {{ $jadwal->jam_mulai }} - {{ $jadwal->jam_selesai }} 
+                                        (Dokter: {{ $jadwal->dokter->name ?? 'Dokter Tidak Ditemukan' }}) 
+                                    </option>
                                 @endforeach
 
                             </select>

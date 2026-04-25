@@ -31,7 +31,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::resource('obat', ObatController::class)->names('obat');
 });
 
-Route::middleware(['auth', 'role:dokter'])->prefix('dokter')->group(function () {
+Route::middleware(['auth', 'role:dokter,admin'])->prefix('dokter')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dokter.dashboard');
     })->name('dokter.dashboard');
@@ -42,8 +42,6 @@ Route::middleware(['auth', 'role:pasien'])->prefix('pasien')->group(function () 
     Route::get('/dashboard', function () {
         return view('admin.pasien.dashboard');
     })->name('pasien.dashboard');
-    Route::get('/daftar-periksa', [PasienController::class, 'daftarPeriksa'])->name('pasien.daftar');
-    
-    // Tambahin route POST juga buat submit form-nya nanti
-    Route::post('/daftar-periksa', [PasienController::class, 'submit'])->name('pasien.daftar.submit');
+    Route::get('/daftar', [PasienController::class, 'daftarPeriksa'])->name('pasien.daftar');
+    Route::post('/daftar', [PasienController::class, 'submit'])->name('pasien.daftar.submit');
 });

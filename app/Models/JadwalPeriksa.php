@@ -17,7 +17,7 @@ class JadwalPeriksa extends Model
 
     public function dokter()
     {
-        return $this->belongsTo(User::class, 'id_dokter');
+        return $this->belongsTo(\App\Models\User::class, 'id_dokter');
     }
 
     public function daftarPolis()

@@ -52,9 +52,9 @@ class User extends Authenticatable
         ];
     }
 
-     public function poli()
+    public function poli()
     {
-        return $this->belongsTo(Poli::class, 'id_poli');
+        return $this->belongsTo(\App\Models\Poli::class, 'id_poli');
     }
 
     public function jadwalPeriksa()

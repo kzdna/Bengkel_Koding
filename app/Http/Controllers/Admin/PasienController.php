@@ -12,7 +12,7 @@ class PasienController extends Controller
     public function index()
     {
         $pasiens = User::where('role', 'pasien')->get();
-        return view('admin.pasien.index', compact('pasiens')); 
+        return view('admin.pasien.dashboard', compact('pasiens')); 
     }
 
     public function create()
@@ -100,7 +100,7 @@ class PasienController extends Controller
     {
         $user = auth()->user(); 
         $polis = \App\Models\Poli::all();
-        $jadwals = \App\Models\JadwalPeriksa::with('dokter')->get(); 
+        $jadwals = \App\Models\JadwalPeriksa::with(['dokter.poli'])->get();
         return view('admin.pasien.daftar', compact('user', 'polis', 'jadwals'));
     }
 
