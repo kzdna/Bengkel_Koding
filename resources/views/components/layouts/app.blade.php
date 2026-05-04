@@ -60,23 +60,16 @@
         function toggleSidebar(){
             const sidebar=document.getElementById('appSidebar')
             const overlay=document.getElementById('sidebarOverlay')
-
             sidebar.classList.toggle('open')
-
-            overlay.style.display=
-            sidebar.classList.contains('open')
-            ? 'block'
-            : 'none'
+            overlay.style.display= sidebar.classList.contains('open') ? 'block' : 'none'
         }
 
         function toggleFullscreen(){
             const icon=document.getElementById('fsIcon')
-
             if(!document.fullscreenElement){
                 document.documentElement.requestFullscreen()
                 icon.className='fas fa-compress'
-            }
-            else{
+            } else {
                 document.exitFullscreen()
                 icon.className='fas fa-expand'
             }
@@ -84,7 +77,5 @@
     </script>
 
     @stack('scripts')
-
 </body>
-
 </html>

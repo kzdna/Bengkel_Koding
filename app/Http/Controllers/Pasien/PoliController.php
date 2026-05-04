@@ -7,18 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\DaftarPoli;
 use App\Models\JadwalPeriksa;
 use App\Models\Poli;
-use App\Illuminate\Support\Facedes\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class PoliController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function get()
     {
         $user = Auth::user();
         $polis = Poli::all();
-        $jadwal = JadwalPeriksa::with('dokter', 'dokter.poli')->get();
+        $jadwal = JadwalPeriksa::with(['dokter.poli'])->get();
 
         return view('pasien.daftar', [
             'user' => $user,
@@ -33,11 +30,12 @@ class PoliController extends Controller
             'id_poli' => 'required|exists:poli,id',
             'id_jadwal' => 'required|exists:jadwal_periksa,id',
             'keluhan' => 'nullable|string',
-            'id_pasien' => 'required|exists:users,id',
+            'id_pasien' => 'required',
         ]);
 
         $jumlahSudahDaftar = DaftarPoli::where('id_jadwal', $request->id_jadwal)->count();
-        $daftar = DaftarPoli::create([
+        
+        DaftarPoli::create([
             'id_pasien' => $request->id_pasien,
             'id_jadwal' => $request->id_jadwal,
             'keluhan' => $request->keluhan,
@@ -45,5 +43,5 @@ class PoliController extends Controller
         ]);
 
         return redirect()->back()->with('message', 'Berhasil Mendaftar ke Poli')->with('type', 'success');
-    }
+    }   
 }

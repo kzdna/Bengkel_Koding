@@ -8,16 +8,11 @@ class JadwalPeriksa extends Model
 {
     protected $table = 'jadwal_periksa';
 
-    protected $fillable = [
-        'id_dokter',
-        'hari',
-        'jam_mulai',
-        'jam_selesai',
-    ];
+    protected $fillable = ['id_dokter', 'hari', 'jam_mulai', 'jam_selesai']; 
 
     public function dokter()
     {
-        return $this->belongsTo(\App\Models\User::class, 'id_dokter');
+        return $this->belongsTo(\App\Models\Dokter::class, 'id_dokter');
     }
 
     public function daftarPolis()
